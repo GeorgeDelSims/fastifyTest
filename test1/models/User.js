@@ -29,4 +29,22 @@ export default class User {
             throw error;
         }
     }
+
+    deleteUser(name) {
+        try {
+            const result = db.prepare('DELETE FROM users WHERE name = ?').run(name);
+    
+            if (result.changes === 0) {
+                this.logger.warn(`User ${name} not found`);
+                return { message: `User '${name}' not found` };
+            }
+            
+            this.logger.info(`User ${name} successfully deleted`);
+            return { message: `User '${name}' deleted successfully` };
+        } catch (error) {
+            this.logger.error(`Error deleting user: ${error.message}`);
+            throw error;
+        }
+    }
+    
 }

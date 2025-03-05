@@ -1,8 +1,8 @@
 // ESM
 import Fastify from 'fastify'
 import databasePlugin from './database/database.js'
-import firstRoute from './routes/firstRoute.js'
-import usersRoutes from './routes/usersRoutes.js'
+import firstRoute from './routes/indexRoute.js'
+import usersRoutes from './routes/userRoutes.js'
 
 const   fastify = Fastify({ logger: true })
 

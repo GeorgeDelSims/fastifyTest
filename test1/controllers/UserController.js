@@ -35,4 +35,22 @@ export default class UserController {
             reply.status(500).send({ error: 'Failed to add user' });
         }
     }
+
+    async deleteUser(request, reply) {
+        try {
+            this.logger.info('DELETE /users request received');
+            const { name } = request.body;
+
+            if (!name) {
+                this.logger.warn('DELETE /users: Name is required');
+                return (reply.status(400).send({ error: 'Name is required'}));
+            }
+
+            const user = this.userModel.deleteUser(name);
+            this.logger.info(`User deleted: ${ user.name } (ID: ${user.id})`);
+            reply.send({ message: 'User deleted successfully', user });
+        } catch (error) {
+            this.logger.error(500).send({ error: 'Failed to delete user'})
+        }
+    }
 }
