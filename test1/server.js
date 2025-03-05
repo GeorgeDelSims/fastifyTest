@@ -1,17 +1,32 @@
-// ESM
+/*
+Elements to download for the docker:
+  npm install fastify @fastify/jwt fastify-bcrypt @fastify/cookie better-sqlite3
+
+test installation versions:
+  npm list --depth=0
+
+*/
+
+// Plugin imports (files are in the node_modules directory)
 import Fastify from 'fastify'
 import databasePlugin from './database/database.js'
 import firstRoute from './routes/indexRoute.js'
 import usersRoutes from './routes/userRoutes.js'
+import fastifyJwt from '@fastify/jwt'
+import fastifyBcrypt from 'fastify-bcrypt'
+import fastifyCookie from '@fastify/cookie'
+
 
 const   fastify = Fastify({ logger: true })
 
-// Register API routes (with db if the route needs to interact with sqlite)
-fastify.register(databasePlugin)
-fastify.register(firstRoute)
-fastify.register(usersRoutes)
+fastify.register(databasePlugin);
+fastify.register(firstRoute);
+fastify.register(usersRoutes);
+fastify.register(fastifyJwt, { secret: "secret_key" }); // Check this out
+fastify.register(fastifyBcrypt);
+fastify.register(fastifyCookie);
 
-// Run the server:
+// Run server:
 fastify.listen({ port: 3000, host: '127.0.0.1' }, function (err, address) {
   if (err) {
     fastify.log.error(err)
