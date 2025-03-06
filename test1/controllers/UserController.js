@@ -1,4 +1,4 @@
-import User from '../models/User.js';
+import User from '../models/UserModel.js';
 
 export default class UserController {
     constructor(logger) {
